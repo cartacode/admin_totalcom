@@ -8,12 +8,13 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from django.urls import reverse
 from .forms import BaseLoginForm, BaseSignupForm
 from .models import BaseUser
 
 @login_required
 def index(request):
-	return render(request, "index.html")
+	return redirect(reverse('dashboard'))
 
 # Create your views here.
 def auth_login (request):
@@ -35,11 +36,9 @@ def auth_login (request):
             user = authenticate(username=email, password=password)
             context["error"] = "Password is wrong!"
 
-            print(request.POST)
-            print("@#@#@: ", user)
             if user is not None:
                 login(request, user)
-                return redirect("/")
+                return redirect(reverse('dashboard'))
 
         return render(request, "login.html", context)
 
