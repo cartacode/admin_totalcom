@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>App/Status</h1>
+
+<div class="container">
+
+	<div class="row text-danger">
+		{{ error }}
+	</div>
+
+	<div class="row">
+		{{ stats }}
+	</div>
+
+{% endblock %}
