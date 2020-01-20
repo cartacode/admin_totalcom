@@ -11,6 +11,8 @@ urlpatterns = [
         name="upload_domains"),
     path('<str:domain>/stats', views.domain_stats,
         name="domain-stats"),
-    path('<str:domain>/events', views.domain_stats,
-        name="domain-eventss"),
+    path('<str:domain>/events/', views.events_page,
+        name="events-page"),
+    path('<str:domain>/events/<str:begin>/<str:end>', views.domain_events,
+        name="domain-events"),
 ]

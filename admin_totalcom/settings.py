@@ -123,5 +123,83 @@ STATICFILES_DIRS = [
 
 STATIC_URL = '/static/'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    # This formatter will output the same way it appears in ./manage runserver
+    'formatters': {
+        'standard': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+
+    'handlers': {
+        # 'null': {
+        #     'level':'DEBUG',
+        #     'class':'django.utils.log.NullHandler',
+        # },
+        'logfile': {
+            'level':'DEBUG',
+            'class':'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR + "/logfile",
+            'maxBytes': 50000,
+            'backupCount': 2,
+            'formatter': 'standard',
+        },
+        'console':{
+            'level':'INFO',  # less detail level
+            'class':'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+    },
+
+
+    'loggers': {
+        'django': {
+            'handlers':['console'],
+            'propagate': True,
+            'level':'WARN',
+        },
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'gf': {
+            'handlers': ['console', 'logfile'],
+            'level': 'DEBUG',
+        },
+        'website': {
+            'handlers': ['console', 'logfile'],
+            'level': 'DEBUG',
+        },
+        'api': {
+            'handlers': ['console', 'logfile'],
+            'level': 'DEBUG',
+        },
+        'content': {
+            'handlers': ['console', 'logfile'],
+            'level': 'DEBUG',
+        },
+        'core': {
+            'handlers': ['console', 'logfile'],
+            'level': 'DEBUG',
+        },
+        'tools': {
+            'handlers': ['console', 'logfile'],
+            'level': 'DEBUG',
+        },
+        'rest_framework_jwt.serializers': {
+            'handlers': ['console', 'logfile'],
+            'level': 'DEBUG',
+        },
+
+    }
+}
+
 # Override production variables if DJANGO_DEV_ENVIRONMENT env variable is set
 from .settings_dev import *

@@ -9,3 +9,4 @@ credentials.json
 *.sqlite3
 .vscode/
 admin_totalcom/settings_dev.py
+logfile
