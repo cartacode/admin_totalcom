@@ -1,20 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form accept-charset="UTF-8" action="/login/" method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-        <div class="fieldWrapper">
-            {{ field.label_tag }} {{ field }}
-            {{ field.errors }}
-            {% if field.help_text %}
-            <p class="help">{{ field.help_text|safe }}</p>
-            {% endif %}
+<div class="container">
+    <form accept-charset="UTF-8" action="/login/" method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="fieldWrapper">
+                <div class="row">
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+                {{ field.errors }}
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <div class="row">
+            <button type="submit" class="btn btn-primary">Login</button>
         </div>
-    {% endfor %}
-    <div class="">
-        <button type="submit">Login</button>
+    </form>
+    <div class="row">
+        <a href="{% url 'auth_signup' %}" class="btn btn-default">Sign Up</a>
     </div>
-</form>
-<a href="{% url 'auth_signup' %}">Sign Up</a>
 {% endblock %}

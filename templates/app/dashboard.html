@@ -2,5 +2,12 @@
 
 {% block content %}
 <h1>App/Dashboard</h1>
-{% csrf_token %}
+
+<div class="container">
+	{% for allowed_domain in allowed_domains %}
+	<div class="row">
+		<a href="{% url 'domain-stats' allowed_domain.name %}">{{allowed_domain.name}}</a>
+	</div>
+	{% endfor %}
+
 {% endblock %}
