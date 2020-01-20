@@ -9,7 +9,7 @@ from django.contrib.auth.models import AbstractUser
 class BaseUser(AbstractUser):
     ''' Custom user model used to store extra fields '''
     def __str__(self):
-        return self.username
+        return "{}-{}".format(self.id, self.username)
 
     def get_short_name(self):
         return "{}".format(self.first_name if self.first_name else self.username)
