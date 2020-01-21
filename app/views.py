@@ -46,9 +46,8 @@ def dashboard(request):
 
     user_group = UserGroup.objects.filter(
             user=request.user).values("allowed_list")
-    if allowed_list:
-        allowed_list = user_group[0]["allowed_list"].split(",")
-        context["allowed_list"] = allowed_list
+    allowed_list = user_group[0]["allowed_list"].split(",")
+    context["allowed_list"] = allowed_list
 
     try:
         res = mailgun_api("domains")
@@ -59,11 +58,11 @@ def dashboard(request):
         logger.info("line 59: {}".format(e))
         return render(request, "app/dashboard.html", context)
 
-    if "allowed_list" in context:
-        allowed_domains = list(filter(lambda d: d["name"] in context, domains))
+    if len(allowed_list) > 0:
+        allowed_domains = list(filter(lambda d: d["name"] in allowed_list, domains))
     else:
         allowed_domains = domains
-    context["allowed_domains"] = domains
+    context["allowed_domains"] = allowed_domains
 
     return render(request, "app/dashboard.html", context)
 
@@ -93,7 +92,7 @@ def upload_domains_to_user(request, user_id):
 def domain_stats(request, domain):
     context = {}
     try:
-        res = mailgun_api("{}stats/total".format(domain), 
+        res = mailgun_api("{}/stats/total".format(domain), 
                         {"event": ["accepted"],
                         "duration": "1h"})
         if "stats" in res:
@@ -102,7 +101,7 @@ def domain_stats(request, domain):
             context['error'] = "no response"
     except Exception as e:
         context['error'] = str(e)
-        logger.info("line 104: {}".format(e))
+        logger.info("line 104: {}".format(str(e)))
 
     return render(request, 'app/stats.html', context)
 
@@ -143,7 +142,7 @@ def domain_events(request, domain, begin=None, end=None):
             context["new_events"] = events
         else:
             context["error"] = "No result!"
-            logger.info("line 146: {}".format(e))                 
+            logger.info("line 146: {}".format("No result!"))                 
 
     except Exception as e:
         print("line 147: {}".format(str(e)))
