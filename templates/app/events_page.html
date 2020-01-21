@@ -6,7 +6,6 @@
 <div class="container">
 	<div class="row">
 		<strong>{{domain}}<strong>
-		<a href="{% url 'domain-events' domain '2020-01-19' '2020-01-20' %}">Detail</a>
 	</div>
 	<form method="post" action="{% url 'events-page' domain %}">
 		{% csrf_token %}
