@@ -61,7 +61,7 @@ def dashboard(request):
     if len(allowed_list) > 0:
         allowed_domains = list(filter(lambda d: d["name"] in allowed_list, domains))
     else:
-        allowed_domains = domains
+        allowed_domains = []
     context["allowed_domains"] = allowed_domains
 
     return render(request, "app/dashboard.html", context)
