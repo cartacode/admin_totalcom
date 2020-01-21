@@ -170,31 +170,15 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
-        'gf': {
+        'admin_totalcom': {
             'handlers': ['console', 'logfile'],
             'level': 'DEBUG',
         },
-        'website': {
-            'handlers': ['console', 'logfile'],
-            'level': 'DEBUG',
-        },
-        'api': {
-            'handlers': ['console', 'logfile'],
-            'level': 'DEBUG',
-        },
-        'content': {
+        'app': {
             'handlers': ['console', 'logfile'],
             'level': 'DEBUG',
         },
         'core': {
-            'handlers': ['console', 'logfile'],
-            'level': 'DEBUG',
-        },
-        'tools': {
-            'handlers': ['console', 'logfile'],
-            'level': 'DEBUG',
-        },
-        'rest_framework_jwt.serializers': {
             'handlers': ['console', 'logfile'],
             'level': 'DEBUG',
         },

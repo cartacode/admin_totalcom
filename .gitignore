@@ -10,3 +10,4 @@ credentials.json
 .vscode/
 admin_totalcom/settings_dev.py
 logfile
+venv/
