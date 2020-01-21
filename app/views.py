@@ -46,8 +46,9 @@ def dashboard(request):
 
     user_group = UserGroup.objects.filter(
             user=request.user).values("allowed_list")
-    allowed_list = user_group[0]["allowed_list"].split(",")
-    context["allowed_list"] = allowed_list
+    if len(user_group) > 0:
+        allowed_list = user_group[0]["allowed_list"].split(",")
+        context["allowed_list"] = allowed_list
 
     try:
         res = mailgun_api("domains")
@@ -58,7 +59,7 @@ def dashboard(request):
         logger.info("line 59: {}".format(e))
         return render(request, "app/dashboard.html", context)
 
-    if len(allowed_list) > 0:
+    if allowed_list != None and len(allowed_list) > 0:
         allowed_domains = list(filter(lambda d: d["name"] in allowed_list, domains))
     else:
         allowed_domains = []
