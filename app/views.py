@@ -38,8 +38,13 @@ def get_second_key(item):
 
 
 # Create your views here.
+
 @login_required
 def dashboard(request):
+    return render(request, "app/dashboard.html")
+
+@login_required
+def domain(request):
     context = {}
     domains = []
     allowed_list = None
@@ -65,7 +70,7 @@ def dashboard(request):
         allowed_domains = []
     context["allowed_domains"] = allowed_domains
 
-    return render(request, "app/dashboard.html", context)
+    return render(request, "app/domain.html", context)
 
 @csrf_exempt
 def upload_domains_to_user(request, user_id):
