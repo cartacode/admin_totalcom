@@ -1,24 +1,77 @@
-{% extends 'base.html' %}
+{% extends 'blank_layout.html' %}
 
 {% block content %}
-<div class="container">
-    <form accept-charset="UTF-8" action="/signup/" method="POST">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="fieldWrapper">
-                <div class="row">
-                    {{ field.label_tag }} {{ field }}
-                    {{ field.errors }}
+<div class="register-page">
+    <div class="register-box">
+      <div class="register-logo">
+        <a href="../../index2.html"><b>TotalCom</b>System</a>
+      </div>
+
+      <div class="card">
+        <div class="card-body register-card-body">
+          <p class="login-box-msg">Register a new membership</p>
+
+          <form action="{% url 'auth_signup' %}" method="post">
+            {% csrf_token %}
+            <div class="input-group mb-1">
+              {{ form.username }}
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
                 </div>
-                {% if field.help_text %}
-                <p class="help">{{ field.help_text|safe }}</p>
-                {% endif %}
+              </div>
             </div>
-        {% endfor %}
-        <div class="">
-            <button type="submit" class="btn btn-primary">Signup</button>
+            <div class="text-danger adminlte-error">{{form.username.errors}}</div>
+            <div class="input-group mb-1">
+              {{ form.email }}
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <div class="text-danger adminlte-error">{{form.email.errors}}</div>
+            <div class="input-group mb-1">
+              {{ form.password }}
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="text-danger adminlte-error">{{form.password.errors}}</div>
+            <div class="input-group mb-1">
+              {{ form.confirm_password }}
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="text-danger adminlte-error">{{form.confirm_password.errors}}</div>
+            <div class="row">
+              <div class="col-8">
+                <div class="icheck-primary">
+                  <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                  <label for="agreeTerms">
+                   I agree to the <a href="#">terms</a>
+                  </label>
+                </div>
+              </div>
+              <!-- /.col -->
+              <div class="col-4">
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </form>
+
+          <a href="{% url 'auth_login' %}" class="text-center">I already have a membership</a>
         </div>
-    </form>
-    <a href="{% url 'auth_signup' %}" class="btn">Login</a>
+        <!-- /.form-box -->
+      </div><!-- /.card -->
+    </div>
+    <!-- /.register-box -->
 </div>
+<!-- /.register-box -->
 {% endblock %}

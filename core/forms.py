@@ -4,24 +4,29 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth import authenticate
 from core.models import BaseUser
+from utils.validate import form_validate_email, form_validate_password
 
 
 class BaseSignupForm(ModelForm):
     username = forms.CharField(
         widget=forms.TextInput(attrs={"type": "text",
-                                        "placeholder": "Username"}),
+                                        "placeholder": "Username",
+                                        "class": "form-control"}),
         required=True)
     email = forms.EmailField(
         widget=forms.TextInput(attrs={"type": "text",
-                                        "placeholder": "Email"}),
+                                        "placeholder": "Email",
+                                        "class": "form-control"}),
         required=True)
     password = forms.CharField(
         widget=forms.TextInput(attrs={"type": "password",
-                                        "placeholder": "Password"}),
+                                        "placeholder": "Password",
+                                        "class": "form-control"}),
         required=True)
     confirm_password = forms.CharField(
         widget=forms.TextInput(attrs={"type": "password",
-                                        "placeholder": "Conform password"}),
+                                        "placeholder": "Conform password",
+                                        "class": "form-control"}),
         required=True)
 
     class Meta:
@@ -36,6 +41,7 @@ class BaseSignupForm(ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data['email']
+        form_validate_email(email)
         if BaseUser.objects.exclude(pk=self.instance.pk).filter(email=email).exists():
             raise forms.ValidationError(u'Email "%s" is already in use.' % email)
         return email
@@ -49,8 +55,7 @@ class BaseSignupForm(ModelForm):
             if not self.cleaned_data.get(field):
                 self.add_error(field, u'"%s" shouldn\'t be empty' % field)
 
-        if len(password) < 8:
-            self.add_error('password', u'Password should be 8 characters.')
+        form_validate_password(self, password)
 
         if password != confirm_password:
             self.add_error('confirm_password', u'Password is not matched.')
@@ -68,15 +73,15 @@ class BaseSignupForm(ModelForm):
 class BaseLoginForm(forms.Form):
     email = forms.EmailField(
         widget=forms.TextInput(attrs={"type": "text",
-                                        "placeholder": "Email"}),
+                                        "placeholder": "Email",
+                                        "class": "form-control"}),
         required=True)
     password = forms.CharField(
         widget=forms.TextInput(attrs={"type": "password",
-                                        "placeholder": "Password"}),
+                                        "placeholder": "Password",
+                                        "class": "form-control"}),
         required=True)
 
     def clean(self):
         password = self.cleaned_data['password']
-
-        if len(password) < 8:
-            self.add_error('password', u'Password should be 8 characters.')
+        form_validate_password(self, password)
