@@ -1,23 +1,59 @@
 {% extends 'base.html' %}
 
+{% block head_title %}Event Range{% endblock %}
+
+	
 {% block content %}
-<h1>App/Dashboard</h1>
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
-<div class="container">
-	<div class="row">
-		<strong>{{domain}}<strong>
-	</div>
-	<form method="post" action="{% url 'events-page' domain %}">
-		{% csrf_token %}
-		<div class="row">
-			<label>Begin: </label>
-			<input type="date" name="begin" id="begin" />
-		</div>
-		<div class="row">
-			<label>End: </label>
-			<input type="date" name="end" id="end" />
-		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
-	</form>
-
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-md-6">
+            <!-- general form elements disabled -->
+            <div class="card card-warning">
+              <div class="card-header">
+                <h3 class="card-title">Choose Timeline</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form method="post" action="{% url 'events' domain %}">
+								{% csrf_token %}
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>Begin</label>
+                        <input type="text" class="form-control" name="begin" id="begin" placeholder="YYYY-MM-DD">
+                      </div>
+                    </div>
+                   </div>
+                   <div class="row">
+                    <div class="col-sm-12">
+                      <div class="form-group">
+                        <label>End</label>
+                        <input type="text" class="form-control" name="end" id="end" placeholder="YYYY-MM-DD">
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 {% endblock %}

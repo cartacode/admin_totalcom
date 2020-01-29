@@ -18,6 +18,8 @@ from django.urls import reverse
 from core.models import BaseUser
 from app.models import UserGroup
 
+import pdb
+
 MAILGUN_API_URL = "https://api.mailgun.net/v3"
 
 def mailgun_api(uri, params=None):
@@ -37,14 +39,29 @@ def get_second_key(item):
     return item[1]
 
 
-# Create your views here.
+def get_messages(domain, uri):
+    context = {}
+    recipients = []
+    new_events = {}
+    try:
+        # params = {"event": "accepted", "ascending": "yes"}
+        params = {}        
+        res = mailgun_api("{}/{}".format(domain, uri), params)
+        return res
+    except Exception as e:
+        logger.info("Error on get_messages: {}".format(str(e)))
+        return {'error': 'get_messages error'}
 
+
+# Create your views here.
 @login_required
 def dashboard(request):
+    test_domain = "grassrootconnection.com"
+    # res = get_messages(test_domain, "messages")
     return render(request, "app/dashboard.html")
 
 @login_required
-def domain(request):
+def domains(request):
     context = {}
     domains = []
     allowed_list = None
@@ -70,7 +87,7 @@ def domain(request):
         allowed_domains = []
     context["allowed_domains"] = allowed_domains
 
-    return render(request, "app/domain.html", context)
+    return render(request, "app/domains.html", context)
 
 @csrf_exempt
 def upload_domains_to_user(request, user_id):
@@ -128,7 +145,7 @@ def domain_events(request, domain, begin=None, end=None):
         # pdb.set_trace()
         if "items" in res and len(res["items"]) > 0:
             if params["begin"] > res["items"][0]["timestamp"]:
-                time.sleep(20)
+                time.sleep(2)
                 res = mailgun_api("{}/events".format(domain), params)
                 if params["begin"] > res["items"][0]["timestamp"]:
                     context["error"] = "Your request may be blocked! \
@@ -162,8 +179,13 @@ def events_page(request, domain):
     if request.method == "POST":
         begin = request.POST.get("begin", None)
         end = request.POST.get("end", None)
-        return redirect(reverse("domain-events", args=(domain, begin, end,)))
+        return redirect(reverse("events", args=(domain, begin, end,)))
     return render(request, 'app/events_page.html', context)
 
 
+def users(request):
+    return render(request, "app/users.html")
 
+
+def reports(request):
+    return render(request, "app/reports.html")
