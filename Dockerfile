@@ -2,7 +2,7 @@
 FROM python:3.7.4-alpine
 
 # set work directory
-WORKDIR /admincom
+WORKDIR /admin_totalcom
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -18,13 +18,14 @@ RUN apk update \
 # install dependencies
 RUN pip install --upgrade pip
 #RUN virtualenv /venv
+COPY requirements.txt /admin_totalcom/
 RUN pip install -r requirements.txt
 
 # copy entrypoint.sh
-COPY ./entrypoint.sh /admincom/entrypoint.sh
+COPY ./entrypoint.sh /admin_totalcom/entrypoint.sh
 
 # copy project
-COPY . /admincom/
+COPY . /admin_totalcom/
 
 # run entrypoint.sh
-ENTRYPOINT ["/admincom/entrypoint.sh"]
+ENTRYPOINT ["/admin_totalcom/entrypoint.sh"]

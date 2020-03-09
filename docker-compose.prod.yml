@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile.prod
     command: gunicorn admin_totalcom.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static_volume:/admincom/staticfiles
-      - media_volume:/admincom/mediafiles
+      - static_volume:/admin_totalcom/staticfiles
+      - media_volume:/admin_totalcom/mediafiles
     expose:
       - 8000
     env_file: .env

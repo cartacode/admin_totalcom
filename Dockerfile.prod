@@ -2,7 +2,7 @@
 FROM python:3.7.4-alpine
 
 # set work directory
-WORKDIR /admincom
+WORKDIR /admin_totalcom
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -21,10 +21,10 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # copy entrypoint-prod.sh
-COPY ./entrypoint.prod.sh /admincom/entrypoint.prod.sh
+COPY ./entrypoint.prod.sh /admin_totalcom/entrypoint.prod.sh
 
 # copy project
-COPY . /admincom/
+COPY . /admin_totalcom/
 
 # run entrypoint.prod.sh
-ENTRYPOINT ["/admincom/entrypoint.prod.sh"]
+ENTRYPOINT ["/admin_totalcom/entrypoint.prod.sh"]
