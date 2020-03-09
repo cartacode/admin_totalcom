@@ -2,7 +2,7 @@
 FROM python:3.7.4-alpine
 
 # set work directory
-WORKDIR /home/ubuntu/admin_totalcom
+WORKDIR /var/www/admin_totalcom
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -21,10 +21,10 @@ RUN virtualenv /venv
 RUN /venv/bin/pip install -r requirements.txt
 
 # copy entrypoint.sh
-COPY ./entrypoint.sh /home/ubuntu/admin_totalcom/entrypoint.sh
+COPY ./entrypoint.sh /var/www/admin_totalcom/entrypoint.sh
 
 # copy project
-COPY . /home/ubuntu/admin_totalcom/
+COPY . /var/www/admin_totalcom/
 
 # run entrypoint.sh
-ENTRYPOINT ["/home/ubuntu/admin_totalcom/entrypoint.sh"]
+ENTRYPOINT ["/var/www/admin_totalcom/entrypoint.sh"]
