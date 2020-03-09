@@ -5,7 +5,7 @@ services:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/var/www/admin_totalcom/
+      - .:/home/ubuntu/admin_totalcom/
     ports:
       - 8000:8000
     environment:
